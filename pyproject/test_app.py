@@ -4,7 +4,6 @@ from app import Post, Blog
 from unittest import TestCase
 from unittest.mock import patch
 
-
 class PostTest(TestCase):
 
     def setUp(self):
@@ -25,43 +24,44 @@ class BlogTest(TestCase):
 
     def setUp(self):
         self.b1 = Blog('Test', 'Test Author')
+        self.b1.create_post('Test Post 1', 'Test Conent 1')
+        self.b1.create_post('Test Post 2', 'Test Conent 2')
         self.b2 = Blog('Blog', 'Artur')
 
     def tearDown(self):
         pass
 
     def test_blog(self):
-
-        self.assertEqual('Test', self.b1.title)
-        self.assertEqual('Test Author', self.b1.author)
-        self.assertListEqual([], self.b1.posts)
+        self.assertEqual('Blog', self.b2.title)
+        self.assertEqual('Artur', self.b2.author)
+        self.assertListEqual([], self.b2.posts)
 
     def test_repr_no_posts(self):
-
-        self.assertEqual(self.b1.__repr__(), 'Test by Test Author (0 posts)')
+        self.assertEqual(self.b1.__repr__(), 'Test by Test Author (2 posts)')
         self.assertEqual(self.b2.__repr__(), 'Blog by Artur (0 posts)')
 
     def test_repr_many_posts(self):
-        self.b1.posts = ['element']
-        self.b2.posts = ['element1','element2']
-        self.assertEqual(self.b1.__repr__(), 'Test by Test Author (1 post)')
+        self.b2.posts = ['post_object1','post_object2']
+        self.assertEqual(self.b1.__repr__(), 'Test by Test Author (2 posts)')
         self.assertEqual(self.b2.__repr__(), 'Blog by Artur (2 posts)')
 
-    def test_read_all_posts(self):
-        self.b1.posts = [
-                            {
-                                'title':'Post1',
-                                'content': 'Content Post1'
-                            }
-        ]
+    def test_json(self):
+        expected = {
+                    'title': self.b1.title,
+                    'author': self.b1.author,
+                    'posts': [
+                                {
+                                    'title': self.b1.posts[0].title,
+                                    'content': self.b1.posts[0].content
+                                },
+                                {
+                                    'title': self.b1.posts[1].title,
+                                    'content': self.b1.posts[1].content
+                                }
+                            ]
+                    }
 
-        # self.assertEqual(len(self.b1.posts),2)
-
-        with patch('builtins.print') as mocked_print:
-            self.b1.read_all_posts()
-            mocked_print.assert_called_with('Post 1: Post1, Content Post1')
-
-            # print('Post {}: {}, {}'.format(counter, post.title, post.content))
+        self.assertEqual(expected, self.b1.json())
 
 
 
@@ -98,6 +98,12 @@ class IntegrationTest(TestCase):
 
         self.assertDictEqual(self.b.json(), expected)
 
+    def test_read_all_posts(self):
+        with patch('builtins.print') as mocked_print:
+            self.b.create_post('Test Post 2', 'Test Content 2')
+            self.b.read_all_posts()
+            mocked_print.assert_called_with('Post 1: Test Post 2, Test Content 2')
+
 class AppTest(TestCase):
 
     def setUp(self):
@@ -107,14 +113,22 @@ class AppTest(TestCase):
         pass
 
     def test_list_all_blogs(self):
-        app.blogs = {'Test': self.b}
+        app.blog_objects = {'Test': self.b}
         with patch('builtins.print') as mocked_print:
             app.list_all_blogs()
             mocked_print.assert_called_with('Blog 1: Test by Test Author (0 posts)')
 
     def test_create_blog(self):
-        app.create_blog('Test','Test Author')
-        self.assertEqual(str(app.blogs['Test']),str(self.b))
+        blogs = [
+            {
+                'title': 'Test',
+                'author': 'Test Author',
+                'posts': []
+            }
+        ]
+
+        app.create_blog_object(blogs)
+        self.assertEqual(str(app.blog_objects['Test']),str(self.b))
 
 if __name__ == '__main__':
     unittest.main()

@@ -46,7 +46,9 @@ blog_objects = dict() # blog_name : blog_object
 
 def create_blog_object(blogs):
     for blog in blogs:
-        blog_objects[blog['title']] = Blog(blog['title'], blog['author']) # if the key dosn't exist then it adds it automatically
+        # creating Blog instance and staring it into the list
+        # if the key dosn't exist then it adds it automatically
+        blog_objects[blog['title']] = Blog(blog['title'], blog['author'])
 
 def add_posts_to_blog(blogs):
     for blog in blogs:
@@ -55,7 +57,7 @@ def add_posts_to_blog(blogs):
 
 def list_all_blogs():
     counter = 1
-    for key, blog in blogs.items():
+    for key, blog in blog_objects.items():
         print('Blog {}: {}'.format(counter, blog))  # blog object will be printed as stated in __repr__
         counter +1
 
@@ -104,13 +106,21 @@ def main():
 
     create_blog_object(blogs)
     add_posts_to_blog(blogs)
+    list_all_blogs()
 
-    for key,blog in blog_objects.items():
-        print(blog)
-        print(blog.posts)
+    print(blog_objects['Blog1'].posts)
+    print(blog_objects['Blog2'].posts)
 
+    # for key,blog in blog_objects.items():
+    #     blog.read_all_posts()
+
+    # objects into JSON
+    # for key,blog in blog_objects.items():
+    #     print(blog.json())
     #
-    # blogs[blog_title].read_all_posts()
+    # for key, blog_object in blog_objects.items():
+    #     for post in blog_object.posts:
+    #         print(post.json())
 
 
 if __name__ == '__main__':
