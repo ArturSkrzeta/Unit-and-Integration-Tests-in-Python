@@ -7,3 +7,4 @@
 </ul>
 
 <h3>Demo</h3>
+<img src="images/console.JPG">
