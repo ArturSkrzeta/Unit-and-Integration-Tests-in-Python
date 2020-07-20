@@ -1,4 +1,4 @@
-<h2>Unit Tests in Python</h2>
+<h2>Units And Integration Tests in Python</h2>
 <h3>Intro</h3>
 <ul>
   <li>With the testing code I can perform automated tests on the main app code if some errors/bugs occur.</li>
