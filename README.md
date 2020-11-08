@@ -6,6 +6,5 @@
   <li>Test are performed on units of a simple blog applicaton with its posts.</li>
   <li>Additional feature of the app is converting JSON into Object Oriented Programming code.</li>
 </ul>
-
 <h3>Demo</h3>
 <img src="images/console.JPG">
