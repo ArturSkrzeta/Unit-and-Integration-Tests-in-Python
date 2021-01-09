@@ -61,6 +61,15 @@
 											<li><b>End2End test</b> - tests from the end user’s experience by simulating the real user scenario.</li>
 										</ul>
 
+										<h5>When what test:</h5>
+										<ul>
+											<li>We use unit test when we want to test the logical side of the code without any calls to external services.</li>
+											<li>Integration tests are supposed to test functionality with a broader perspective, almost mimicking the behavior of a user.
+													Because they connect to external systems and services, they take longer to run.
+											</li>
+											<li>Simply put, We want to have a lot of unit tests that run quickly and all the time, and have integration tests run less often (for instance, on any new merge request)</li>
+										</ul>
+
 									</header>
 								</div>
 							</section>
@@ -86,7 +95,7 @@
 									<ul>
 										<li>Application manages Blogs and its Posts.</li>
 										<li>Application is fed with data using JSON files.</li>
-										<li>Performing tests I provide example data to module units (f.e. functions) and compare outcome with expected by me values.</li>
+										<li>Performing tests, I provide example data to module units i.e. functions and compare outcome with expected values.</li>
 										<li>I test application's single units:
 											<br>
 											- testing class instantiation,<br>
@@ -105,7 +114,10 @@
 
 									<h5>Mocking:</h5>
 									<ul>
-										<li></li>
+										<li>There are applications that connect to external services as databases, storage services, external APIs, cloud services, and so on.</li>
+										<li>However, in our unit test we don't want to connect any database or issue HTTP request or send email notification every time we test our code. Only Thing we want to test is the logic behin our code.</li>
+										<li>What else do we need is to make sure unit tests run quickly as we want to run them often with no latency.</li>
+										<li>...</li>
 									</ul>
 
 								</div>
@@ -116,8 +128,7 @@
 								<div class="container">
 									<h3>Setup</h3>
 									<h5>Python libraries installation required:</h5>
-									<code>pip install unitest</code><br>
-									<code>pip install pytest</code>
+									<code>pip install unittest2</code><br>
 								</div>
 							</section>
 
