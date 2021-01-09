@@ -115,9 +115,18 @@
 									<h5>Mocking:</h5>
 									<ul>
 										<li>There are applications that connect to external services as databases, storage services, external APIs, cloud services, and so on.</li>
-										<li>However, in our unit test we don't want to connect any database or issue HTTP request or send email notification every time we test our code. Only Thing we want to test is the logic behin our code.</li>
-										<li>What else do we need is to make sure unit tests run quickly as we want to run them often with no latency.</li>
-										<li>...</li>
+										<li>However, in our unit test we don't want to connect any database or issue HTTP request or send email notification every time we test our code.
+											 	Thing we want to test is the logic behind our code with unit tests qickly, often and with no latency.</li>
+										<li>In this situation, we want to treat such code responsible for connecting with external service as <b>a mock obkect</b>.</li>
+										<li>A mock object substitutes and imitates a real object within a testing environment.
+												This way of mocking objects ensures control of  code’s behavior during testing.
+										</li>
+										<li>Let's take making HTTP requests to external service as the example.
+											Test are being executed as expected only under condition of service's good work.
+											However, due to the fact the service is external and depends on external infrastructure, it doesn't have to behave the same each time.
+											Even a temporary change in the service's behaviour causes a test's failure.
+											In this case the solution is to replace such service with a mock object in order to simulate external service in a predictable way.
+										</li>
 									</ul>
 
 								</div>
