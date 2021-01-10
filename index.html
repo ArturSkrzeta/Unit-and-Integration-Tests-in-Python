@@ -133,6 +133,33 @@
 										</li>
 									</ul>
 
+									<h5>Mock's characterisctics:</h5>
+									<ul>
+										<li>Mock object needs to simulate object that it replacs as close as possible.
+											 	In order to get flexible enough, mock objct has so-called lazy attributes and methods that are created at the same time when we access them.
+<!-- code area start -->
+<pre>
+from unittest.mock import Mock
+
+mock = Mock()
+print(mock.some_attribute)
+print(mock.do_something())
+
+service = mock
+print(service.get_access().allow_admin())
+
+-----------
+# output
+# Mock name='mock.some_attribute' id='4394778696'
+# Mock name='mock.do_something()' id='4394778920'
+# Mock name='mock.get_access().allow_admin()' id='5394778920'
+</pre>
+<!-- code area stop -->
+											- Due to the fact mock creates arbitrary attributes and methods on the fly, it is suitable to replace any object.<br>
+											- Notice that a returned value of each mocked method is also a Mock. In the case above mocked service with its mthods returned mock object as well.
+											</li>
+									</ul>
+
 									<h5>Coding some Mocks:</h5>
 									<ul>
 										<li>Lets take a function that returns a value that is undpredictable on each call. Here, word 'unpredictable' is used in terms of getting different results every time it runs:
@@ -140,12 +167,13 @@
 <pre>
 import random
 
-def <span style="color:#00ffea">roll_dice()</span>:
+def <span style="color:#00ffea">roll_dice() -> int</span>:
   return random.randint(1,6)
 
-<span style="color:#00ffea">roll_dice()</span>
-<span style="color:#00ffea">roll_dice()</span>
-<span style="color:#00ffea">roll_dice()</span>
+print(<span style="color:#00ffea">roll_dice()</span>)
+print(<span style="color:#00ffea">roll_dice()</span>)
+print(<span style="color:#00ffea">roll_dice()</span>)
+
 -----------
 # output
 # 3
@@ -160,8 +188,10 @@ def <span style="color:#00ffea">roll_dice()</span>:
 <!-- code area start -->
 <pre>
 from unittest import mock
+
 <span style="color:#ffe200">mock_roll_dice</span> = mock.Mock(name="roll dice mock", return_value=1)
-<span style="color:#ffe200">mock_roll_dice()</span>
+print(<span style="color:#ffe200">mock_roll_dice()</span>)
+
 -----------
 # output
 # 1
@@ -173,7 +203,8 @@ from unittest import mock
 <!-- code area start -->
 <pre>
 <span style="color:#00ffea">roll_dice</span> = <span style="color:#ffe200">mock_roll_dice</span>
-<span style="color:#00ffea">roll_dice()</span>
+print(<span style="color:#00ffea">roll_dice()</span>)
+
 -----------
 # output
 # 1
@@ -196,9 +227,10 @@ def <span style="color:#ff7eee">guess_num(num: int) -> int</span>:
   roll_num = <span style="color:#00ffea">roll_dice()</span>
 
   if roll_num == num:
-    "You won!"
+    return "You won!"
   else:
-    "You lost!"
+    return "You lost!"
+		
 </pre>
 <!-- code area stop -->
 										</li>
@@ -212,6 +244,7 @@ from game import <span style="color:#ff7eee">guess_num</span>
 def test_guess_num(<span style="color:#ffe200">mock_roll_dice</span>):
   <span style="color:#ffe200">mock_roll_dice</span>.return_value = 3
   assert.<span style="color:#ff7eee">guess_num(</span>3<span style="color:#ff7eee">)</span> == "You won!"
+
 </pre>
 <!-- code area stop -->
 										- In the decorator we indicate a function <b>roll_dice</b> (to be mocked) that is in the local scope of the function that we actually test - in this case  <b>guess_num</b> function of <b>game</b> module.<br>
