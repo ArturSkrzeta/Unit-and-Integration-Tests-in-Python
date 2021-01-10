@@ -158,6 +158,40 @@ print(service.get_access().allow_admin())
 											- Due to the fact mock creates arbitrary attributes and methods on the fly, it is suitable to replace any object.<br>
 											- Notice that a returned value of each mocked method is also a Mock. In the case above mocked service with its mthods returned mock object as well.
 											</li>
+											<li>We can determine mocked functions's returned value up front.
+													That way we can fix functions whose returned value may vary to one value that will be returned every time.
+<!-- code area start -->
+<pre>
+import datetime
+from unittest.mock import Mock
+
+# Save a couple of test days
+<span style="color:#fbff00;">tuesday</span> = datetime.datetime(year=2019, month=1, day=1)
+<span style="color:#fbff00;">saturday</span> = datetime.datetime(year=2019, month=1, day=5)
+
+# Mock datetime to control today's date
+<span style="background-color:#a07927;">datetime = Mock()</span>
+
+def is_weekday():
+  today = datetime.datetime.today()
+  # Python's datetime library treats Monday as 0 and Sunday as 6
+  return (0 <= today.weekday() < 5)
+
+# Mock .today() to return Tuesday
+<span style="background-color:#a07927;">datetime.datetime.today.return_value = <span style="color:#fbff00;">tuesday</span></span>
+# Test Tuesday is a weekday
+assert is_weekday()
+
+# Mock .today() to return Saturday
+<span style="background-color:#a07927;">datetime.datetime.today.return_value = <span style="color:#fbff00;">saturday</span></span>
+# Test Saturday is not a weekday
+assert not is_weekday()
+</pre>
+<span style="font-size:12px;">source: realpython.com</span><br>
+<!-- code area stop -->
+											- in the example above, we mock <code>datetime</code> object and assign <code>return_value</code> of <code>tuesday</code>
+												then <code>saturday</code>to mocked method <code>datetime.today()</code>
+											</li>
 									</ul>
 
 									<h5>Coding some Mocks:</h5>
@@ -230,7 +264,7 @@ def <span style="color:#ff7eee">guess_num(num: int) -> int</span>:
     return "You won!"
   else:
     return "You lost!"
-		
+
 </pre>
 <!-- code area stop -->
 										</li>
