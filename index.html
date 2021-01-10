@@ -116,12 +116,14 @@
 									<ul>
 										<li>There are applications that connect to external services as databases, storage services, external APIs, cloud services, and so on.</li>
 										<li>However, in our unit test we don't want to connect any database or issue HTTP request or send email notification every time we test our code.
-											 	Thing we want to test is the logic behind our code with unit tests qickly, often and with no latency.
+											 	Thing we want to test is the pure logic behind our code with unit tests qickly, often and with no latency.
 										</li>
 										<li>In this situation, we want to treat such code responsible for connecting with external service as <b>a mock object</b>.
 												A mock object substitutes and imitates an object as close to the real object as possible.
-												This way of mocking objects ensures control of the code’s behavior within a testing environment.
+												So in fact what we do is replacing an actuall call to the dependency with a mock object to make its bahaviour predictable.
+												This way of mocking objects ensures control over the code’s behavior and espacially over unpredicted dependecies within a testing environment.
 										</li>
+										<li>In addition, mock object provides information about its usage, which can be inspected, such as if I have called it or how many times I have called a particular dependency tha has been mocked.</li>
 										<li>With mocking an object we can prevent external dependencies from making a test fail.
 												Let's take making HTTP requests to external service as the example.
 												Test are being executed as expected only under the condition of a service's seccessful work.
