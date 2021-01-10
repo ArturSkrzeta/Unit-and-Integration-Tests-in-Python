@@ -74,6 +74,7 @@ input, select, textarea {
 
 img {
 	margin-bottom:20px;
+	max-width: 100%;
 }
 
 /* Basic */
@@ -216,16 +217,21 @@ img {
 
 	pre {
 		font-family: "Source Code Pro", monospace;
-		font-size: 0.9em;
-		margin: 0 0 2.25em 0;
+		font-size: 0.7em;
+		line-height: 1.6em;
+		color: white;
+		margin: 1em 0 0.5em 0;
+		padding: 0.5em 0 0.5em 1em;
+		background: #555;
+		border-radius: 5px;
 	}
 
 		pre code {
 			-webkit-overflow-scrolling: touch;
-			display: block;
-			line-height: 1.5em;
+			display: inline-block;
 			overflow-x: auto;
-			padding: 1em 1.5em;
+			border-radius: 0;
+			line-height: 0.5em;
 		}
 
 	.align-left {
