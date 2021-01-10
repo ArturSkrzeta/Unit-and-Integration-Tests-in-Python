@@ -112,7 +112,7 @@
 										<li>All 12 test passed successfully.</li>
 									</ul>
 
-									<h5>Mocking:</h5>
+									<h5>Theory of Mocking:</h5>
 									<ul>
 										<li>There are applications that connect to external services as databases, storage services, external APIs, cloud services, and so on.</li>
 										<li>However, in our unit test we don't want to connect any database or issue HTTP request or send email notification every time we test our code.
@@ -130,6 +130,47 @@
 												However, due to the fact the service is external and depends on an external infrastructure, it doesn't have to behave the same each time.
 												Even a temporary change in the service's behaviour may cause a test's failure.
 												In this case the solution is to replace such service with a mock object in order to simulate external service in a predictable way.
+										</li>
+									</ul>
+
+									<h5>Coding some Mocks:</h5>
+									<ul>
+										<li>Lets take a function that returns a value that is undpredictable on each call. Here unpredictable is used in terms of getting different results every time it runs:
+<!-- code area start -->
+<pre>
+import random
+
+def <span style="color:#00ffea">roll_dice()</span>:
+  return random.randint(1,6)
+</pre>
+<!-- code area stop -->
+											- function returns number from range 1 - 6 inclusively.<br>
+											- this function poses a certain level of unvertainity and should be mocked when we want to controll it when testing.
+										</li>
+										<li>Instantiating Mock type:
+<!-- code area start -->
+<pre>
+from unittest import mock
+<span style="color:#ffe200">mock_roll_dice</span> = mock.Mock(name="roll dice mock", return_value=1)
+<span style="color:#ffe200">mock_roll_dice()</span>
+-----------
+# output
+# 1
+</pre>
+<!-- code area stop -->
+										- we set a constant retured value of the function <b>mock_roll_dice</b>.
+										</li>
+										<li>Mocking the function:
+<!-- code area start -->
+<pre>
+<span style="color:#00ffea">roll_dice</span> = <span style="color:#ffe200">mock_roll_dice</span>
+<span style="color:#00ffea">roll_dice()</span>
+-----------
+# output
+# 1
+</pre>
+<!-- code area stop -->
+										- from now on every time I call <b>roll_dice</b> function, it returns 1 every time (instrad randomnly integer froam the range) as it's the mock object right now.
 										</li>
 									</ul>
 
