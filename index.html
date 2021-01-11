@@ -250,7 +250,7 @@ print(<span style="color:#00ffea">roll_dice()</span>)
 
 									<h5>Mocking objects in test environment:</h5>
 									<ul>
-										<li>Here is the Python app that we want to test:
+										<li>Here is the Python game.py app that we want to test:
 <!-- code area start -->
 <pre>
 def <span style="color:#00ffea">roll_dice()</span>:
@@ -268,7 +268,7 @@ def <span style="color:#ff7eee">guess_num(num: int) -> int</span>:
 </pre>
 <!-- code area stop -->
 										</li>
-										<li>Actual test:
+										<li>test_game.py:
 <!-- code area start -->
 <pre>
 from unittest import mock
@@ -277,7 +277,7 @@ from game import <span style="color:#ff7eee">guess_num</span>
 @mock.patch("game.<span style="color:#00ffea">roll_dice</span>")
 def test_guess_num(<span style="color:#ffe200">mock_roll_dice</span>):
   <span style="color:#ffe200">mock_roll_dice</span>.return_value = 3
-  assert.<span style="color:#ff7eee">guess_num(</span>3<span style="color:#ff7eee">)</span> == "You won!"
+  assert <span style="color:#ff7eee">guess_num(</span>3<span style="color:#ff7eee">)</span> == "You won!"
 
 </pre>
 <!-- code area stop -->
@@ -287,7 +287,22 @@ def test_guess_num(<span style="color:#ffe200">mock_roll_dice</span>):
 										- With this solution, we replace <b>roll_dice</b> function with another mocked object that throws 3 each time.<br>
 										- Then, calling <b>guess_num</b> with parameter of 3, we will always be winning getting "You won!" every time, getting test passed.
 										</li>
+										<li>running test with pytest
+<pre style="background-color:#15006b;">
+(myenv) C:\Users\U742905\Documents\mock>pytest
+======================================= test session starts ==================================
+platform win32 -- Python 3.8.3, pytest-5.4.3, py-1.9.0, pluggy-0.13.1
+rootdir: C:\Users\U742905\Documents\mock
+plugins: celery-4.4.7
+collected 1 item
+
+<span style="color:#13ff03;">test_game.py .                                                 [100%]
+
+=======================================1 passed in 0.10s =====================================</span>
+</pre>
+										</li>
 									</ul>
+
 
 								</div>
 							</section>
