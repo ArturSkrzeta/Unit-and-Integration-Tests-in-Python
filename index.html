@@ -198,7 +198,7 @@ assert not is_weekday()
 from unittest import mock
 import request
 
-def get_respons():
+def get_respond():
   response = requests.get("https://.../ip")
   if response.status_code == 200:
     return response.json()['origin']
@@ -220,10 +220,49 @@ mock_response.status_code
 											- And now when we compare object <code>response</code> with object <code>mock_response</code> there is no much differences between them, as they both have <code>status_code</code> attribute
 												and they both have <code>json()</code> method which returns a dictionary and calls <code>'origin'</code> key on it to get assigned value.<br>
 											- The difference is that for mock object <code>json()['origin']</code> returns always the same value <code>'0.0.0.0'</code> no matter what.
+											- We can also pass multiple key-word argument when creating a mock object:
+<!-- code area start -->
+<pre>
+mock_response = mock.Mock(**{"status_code": 200, "json.return_value": {'origin': "0.0.0.0"}})
+
+mock_response.json()['origin']
+# '0.0.0.0'
+
+mock_response.status_code
+# 200
+</pre>
+<!-- code area stop -->
+											- From now on, we want to mock <code>requests.get()</code> that brings external dependecy.<br>
+											- We will use the mock's property that causes returning mock object when calling a method on another mock object.
+<!-- code area start -->
+<pre>
+from unittest import mock
+import request
+
+def get_respond():
+  response = requests.get("https://.../ip")
+  if response.status_code == 200:
+    return response.json()['origin']
+
+mock_response = mock.Mock(**{"status_code": 200, "json.return_value": {'origin': "0.0.0.0"}})
+mock_requests_get = mock.Mock(return_value=mock_response)
+
+mock_requests_get().status_code
+# 200
+
+mock_requests_get().json()
+# {'origin':'0.0.0.0'}
+
+requests.get = mock_requests_get
+get_respond()
+# '0.0.0.0'
+</pre>
+<!-- code area stop -->
+											- In the code above we can see that mock object <code>mock_requests_get</code> returns another mock object which is <code>mock_response</code>.
 											</li>
 									</ul>
 
-									<h5>Coding some Mocks:</h5>
+									<h5>Coding some more Mocks:</h5>
 									<ul>
 										<li>Lets take a function that returns a value that is undpredictable on each call. Here, word 'unpredictable' is used in terms of getting different results every time it runs:
 <!-- code area start -->
