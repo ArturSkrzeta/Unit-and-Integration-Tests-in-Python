@@ -192,6 +192,35 @@ assert not is_weekday()
 											- in the example above, we mock <code>datetime</code> object and assign <code>return_value</code> of <code>tuesday</code>
 												then <code>saturday</code>to mocked method <code>datetime.today()</code>
 											</li>
+											<li>Let's mock HTTP request
+<!-- code area start -->
+<pre>
+from unittest import mock
+import request
+
+def get_respons():
+  response = requests.get("https://.../ip")
+  if response.status_code == 200:
+    return response.json()['origin']
+
+get_response()
+# '223.230.126.7'
+
+mock_response = mock.Mock()
+mock_response.json.return_value = {'origin': "0.0.0.0"}
+mock_response.status_code = 200
+
+mock_response.json()['origin']
+# '0.0.0.0'
+
+mock_response.status_code
+# 200
+</pre>
+<!-- code area stop -->
+											- And now when we compare object <code>response</code> with object <code>mock_response</code> there is no much differences between them, as they both have <code>status_code</code> attribute
+												and they both have <code>json()</code> method which return a dictionaty a call <code>'origin'</code> key on it to get assigned value.<br>
+											- The difference is that for mock object <code>json()['origin']</code> returns always the same value <code>'0.0.0.0'</code> no matter what.
+											</li>
 									</ul>
 
 									<h5>Coding some Mocks:</h5>
