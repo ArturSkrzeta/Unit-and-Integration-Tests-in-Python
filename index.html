@@ -239,22 +239,22 @@ mock_response.status_code
 from unittest import mock
 import request
 
-def get_respond():
-  response = requests.get("https://.../ip")
+def get_ip():
+  response = <span style="color:#fbff00;">requests.get(</span>"https://.../ip"<span style="color:#fbff00;">)</span>
   if response.status_code == 200:
     return response.json()['origin']
 
-mock_response = mock.Mock(**{"status_code": 200, "json.return_value": {'origin': "0.0.0.0"}})
-mock_requests_get = mock.Mock(return_value=mock_response)
+<span style="color:#ffa500">mock_response</span> = mock.Mock(**{"status_code": 200, "json.return_value": {'origin': "0.0.0.0"}})
+<span style="color:#00ffea">mock_requests_get</span> = mock.Mock(return_value=<span style="color:#ffa500">mock_response</span>)
 
-mock_requests_get().status_code
+<span style="color:#00ffea">mock_requests_get()</span>.status_code
 # 200
 
-mock_requests_get().json()
+<span style="color:#00ffea">mock_requests_get()</span>.json()
 # {'origin':'0.0.0.0'}
 
-requests.get = mock_requests_get
-get_respond()
+<span style="color:#fbff00;">requests.get</span> = <span style="color:#00ffea">mock_requests_get</span>
+get_ip()
 # '0.0.0.0'
 </pre>
 <!-- code area stop -->
