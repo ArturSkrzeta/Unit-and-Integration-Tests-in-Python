@@ -258,7 +258,26 @@ get_ip()
 # '0.0.0.0'
 </pre>
 <!-- code area stop -->
-											- In the code above we can see that mock object <code>mock_requests_get</code> as the function returns another mock object which is <code>mock_response</code>.
+											- In the code above, we can see that mock object <code>mock_requests_get</code>, as the function, returns another mock object which is <code>mock_response</code>.<br>
+											- By <code>requests.get = mock_requests_get</code> we mock the <code>requests.get</code> function that is used by <code>get_ip()</code>.<br>
+											- A new mocked function get the same attributes and methods:
+<!-- code area start -->
+<pre>
+<span style="color:#00ffea">mock_requests_get()</span>.status_code
+# 200
+
+<span style="color:#00ffea">mock_requests_get()</span>.json()
+# {'origin':'0.0.0.0'}
+
+<span style="color:#fbff00;">requests.get</span> = <span style="color:#00ffea">mock_requests_get</span>
+
+<span style="color:#fbff00;">requests.get()</span>.status_code
+# 200
+
+<span style="color:#fbff00;">requests.get()</span>.status_code
+# {'origin':'0.0.0.0'}
+</pre>
+<!-- code area stop -->
 											</li>
 									</ul>
 
