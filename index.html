@@ -160,10 +160,10 @@ print(service.get_access().allow_admin())
 </pre>
 <!-- code area stop -->
 											- Due to the fact mock creates arbitrary attributes and methods on the fly, it is suitable to replace any object along with its attrubutes and methods.<br>
-											- Notice that a returned object of both each mocked object and each mocked method is also a mock type (check outputs).
+											- Notice that a returned object of each mocked object and its mocked method is also type of Mock (check outputs).
 											</li>
 											<li>We can determine mocked functions's returned value up front.
-													That way we can fix functions, whose returned value may vary, to one value that will be returned every time.
+													That way, we can fix functions, whose returned value may vary, to one value that will be returned every time.
 <!-- code area start -->
 <pre>
 import datetime
@@ -203,7 +203,7 @@ from unittest import mock
 import request
 
 def get_respond():
-  response = requests.get("https://.../ip")
+  <span style="background-color:#a07927;">response</span> = requests.get("https://.../ip")
   if <span style="background-color:#a07927;">response.status_code</span> == 200:
     return <span style="background-color:#a07927;">response.json()['origin']</span>
 
@@ -221,8 +221,8 @@ mock_response = mock.Mock()
 # 200
 </pre>
 <!-- code area stop -->
-											- And now when we compare object <code>response</code> with object <code>mock_response</code> there is no much differences between them, as they both have <code>status_code</code> attribute
-												and they both have <code>json()</code> method which returns a dictionary and calls <code>'origin'</code> key on it to get assigned value.<br>
+											- And now, when we compare object <code>response</code> with object <code>mock_response</code> there is no much differences between them, as they both have <code>status_code</code> attribute
+												and they both have <code>json()</code> method which returns a dictionary with <code>'origin'</code> key to retrieve a value.<br>
 											- The difference is that mock object <code>json()['origin']</code> returns always the same value <code>'0.0.0.0'</code> no matter what.<br>
 											- We can also pass multiple key-word arguments when creating a mock object:
 <!-- code area start -->
@@ -286,7 +286,7 @@ get_ip()
 
 									<h5>Coding some more Mocks:</h5>
 									<ul>
-										<li>Lets take a function that returns a value that is undpredictable on each call. Here, word 'unpredictable' is used in terms of getting different results every time it runs:
+										<li>Lets take a function that returns a value that is undpredictable on each call. Here, word 'unpredictable' is used in terms of getting different results every time the function runs:
 <!-- code area start -->
 <pre>
 import random
@@ -371,7 +371,7 @@ def test_guess_num(<span style="color:#ffe200">mock_roll_dice</span>):
 
 </pre>
 <!-- code area stop -->
-										- In the decorator we indicate a function <b>roll_dice</b> (to be mocked) that is in the local scope of the function that we actually test - in this case  <b>guess_num</b> function of <b>game</b> module.<br>
+										- In the decorator, we indicate a function <b>roll_dice</b> (to be mocked) that is in the local scope of the function that we actually test - in this case <b>guess_num</b> function of <b>game</b> module.<br>
 										- Indicating function in the decorator passes its corresponding mock object to the unit test.<br>
 										- Function <b>test_guess_num</b> recieves it as <b>mock_roll_dice</b> then we can assign <b>return_value</b> of 3 to this mock object.<br>
 										- With this solution, we replace <b>roll_dice</b> function with another mocked object that throws 3 each time.<br>
