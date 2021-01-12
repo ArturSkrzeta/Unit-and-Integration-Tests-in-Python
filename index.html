@@ -156,7 +156,7 @@ print(service.get_access().allow_admin())
 </pre>
 <!-- code area stop -->
 											- Due to the fact mock creates arbitrary attributes and methods on the fly, it is suitable to replace any object along with its attrubutes and methods.<br>
-											- Notice that a returned object of each mocked method is also a Mock. In the case above, mocked service object has been returned from the mock object as well.
+											- Notice that a returned object of each mocked method is also a Mock (check outputs).
 											</li>
 											<li>We can determine mocked functions's returned value up front.
 													That way we can fix functions, whose returned value may vary, to one value that will be returned every time.
@@ -200,27 +200,27 @@ import request
 
 def get_respond():
   response = requests.get("https://.../ip")
-  if response.status_code == 200:
-    return response.json()['origin']
+  if <span style="background-color:#a07927;">response.status_code</span> == 200:
+    return <span style="background-color:#a07927;">response.json()['origin']</span>
 
 get_response()
 # '223.230.126.7'
 
 mock_response = mock.Mock()
-mock_response.json.return_value = {'origin': "0.0.0.0"}
-mock_response.status_code = 200
+<span style="background-color:#a07927;">mock_response.json</span>.return_value = {'origin': "0.0.0.0"}
+<span style="background-color:#a07927;">mock_response.status_code</span> = 200
 
-mock_response.json()['origin']
+<span style="background-color:#a07927;">mock_response.json()['origin']</span>
 # '0.0.0.0'
 
-mock_response.status_code
+<span style="background-color:#a07927;">mock_response.status_code</span>
 # 200
 </pre>
 <!-- code area stop -->
 											- And now when we compare object <code>response</code> with object <code>mock_response</code> there is no much differences between them, as they both have <code>status_code</code> attribute
 												and they both have <code>json()</code> method which returns a dictionary and calls <code>'origin'</code> key on it to get assigned value.<br>
-											- The difference is that for mock object <code>json()['origin']</code> returns always the same value <code>'0.0.0.0'</code> no matter what.<br>
-											- We can also pass multiple key-word argument when creating a mock object:
+											- The difference is that mock object <code>json()['origin']</code> returns always the same value <code>'0.0.0.0'</code> no matter what.<br>
+											- We can also pass multiple key-word arguments when creating a mock object:
 <!-- code area start -->
 <pre>
 mock_response = mock.Mock(**{"status_code": 200, "json.return_value": {'origin': "0.0.0.0"}})
@@ -233,7 +233,6 @@ mock_response.status_code
 </pre>
 <!-- code area stop -->
 											- From now on, we want to mock <code>requests.get()</code> that brings external dependecy.<br>
-											- We will use the mock's property that causes returning mock object when calling a method on another mock object.
 <!-- code area start -->
 <pre>
 from unittest import mock
