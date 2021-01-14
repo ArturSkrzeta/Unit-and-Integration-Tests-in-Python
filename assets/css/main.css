@@ -2487,6 +2487,9 @@ ul.features li {
 		width: 100%;
 	}
 
+td {
+  width: 25% ;
+}
 		table tbody tr {
 			border: solid 2px #f4f4f4;
 			border-left: 0;
